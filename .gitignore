@@ -1,2 +1,5 @@
 # python virtual env folder
 app
+
+# __pycache
+__pycache__
