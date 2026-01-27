@@ -1,5 +1,4 @@
-# python virtual env folder
 app
 
-# __pycache
 __pycache__
+infra/ansible/inventory.ini
