@@ -3,6 +3,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -10,7 +11,11 @@ permissions:
 
 jobs:
   terraform:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        component: [networking]
     steps:
       - uses: actions/checkout@v4
 
@@ -26,12 +31,15 @@ jobs:
           terraform_version: 1.9.0
 
       - name: Terraform Init
+        working-directory: infra/terraform/${{ matrix.component }}
         run: terraform init
 
       - name: Plan
         if: github.event_name == 'pull_request'
+        working-directory: infra/terraform/${{ matrix.component }}
         run: terraform plan -no-color
 
       - name: Apply
         if: github.ref == 'refs/heads/main'
+        working-directory: infra/terraform/${{ matrix.component }}
         run: terraform apply -auto-approve
