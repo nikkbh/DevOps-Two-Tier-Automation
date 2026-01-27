@@ -30,37 +30,6 @@ resource "azurerm_virtual_network" "main" {
   resource_group_name = azurerm_resource_group.rg.name
 }
 
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "3.75.0"
-    }
-  }
-  required_version = ">= 1.5.0"
-}
-
-provider "azurerm" {
-  # Configuration options
-  features {}
-  subscription_id = var.subscription
-}
-
-resource "azurerm_resource_group" "rg" {
-  name     = var.resource_group_name
-  location = var.location
-  tags = {
-    Name = "DevOps-Two-Tier-ResourceGroup"
-  }
-}
-
-resource "azurerm_virtual_network" "main" {
-  name                = "vnet-main"
-  address_space       = ["10.0.0.0/16"]
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-}
-
 resource "azurerm_subnet" "public" {
   name                 = "public_subnet"
   resource_group_name  = azurerm_resource_group.rg.name
