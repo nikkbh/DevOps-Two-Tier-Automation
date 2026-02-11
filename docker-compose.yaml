@@ -18,7 +18,7 @@ services:
     restart: unless-stopped
 
   flask_app:
-    image: ${FLASK_IMAGE:-youracr.azurecr.io/flask-app:latest}  # From GitHub secret
+    image: ${FLASK_IMAGE}
     ports:
       - "5000:5000"
     environment:
