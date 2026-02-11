@@ -39,6 +39,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Azure Login
+        uses: azure/docker-login@v2 # Handles OIDC + ACR login
+        with:
+          login-server: ${{ env.ACR_LOGIN_SERVER }}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Build and push
