@@ -79,10 +79,9 @@ jobs:
           key: ${{ secrets.AZURE_VM_PASSWORD }}
           script: |
             cd ~/app
-            az acr login --name ${{ secrets.ACR_NAME }}  # Uses runner's Docker auth
-            git pull origin main
+            az acr login --name ${{ secrets.ACR_NAME }}
             docker compose pull flask_app
             docker compose down
-            docker compose up -d --force-recreate --remove-orphans
-            sleep 30
-            curl -f http://localhost:5000/health || exit 1
+            docker compose up -d --force-recreate
+            sleep 60
+            curl -f http://localhost:5000/health
